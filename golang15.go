@@ -22,6 +22,11 @@ type secretagent struct {
 	ltk bool
 }
 
+type child struct {
+	person
+	likes_league bool
+}
+
 func (sa secretagent) speak() {
 	fmt.Println(sa.first, "says even more", sa.saying)
 }
@@ -32,6 +37,13 @@ type human interface {
 
 func foo(h human) {
 	h.speak()
+}
+
+func foo2(ch child) {
+	if ch.likes_league == false {
+		ch.saying = "League is the best"
+	}
+	ch.speak()
 }
 
 func main() {
@@ -97,16 +109,23 @@ func main() {
 		},
 		ltk: true,
 	}
+
+	ch1 := child{
+		person: person{
+			first:  "Bobby",
+			age:    8,
+			saying: "Wah mommy, karthus op",
+		},
+		likes_league: false,
+	}
 	fmt.Println(sa1)
 	fmt.Println(sa1.first)
 	fmt.Println(sa1.person.first)
-
-	p1.speak()
-	p2.speak()
-	sa1.speak()
 	fmt.Println("--")
 	foo(p1)
 	foo(p2)
 	foo(sa1)
+	foo(ch1)
+	foo2(ch1)
 
 }
